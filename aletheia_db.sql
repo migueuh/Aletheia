@@ -82,8 +82,9 @@ CREATE TABLE `comentario` (
   `aluno_email` varchar(255) NOT NULL,
   `titulo` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `aluno_email` (`aluno_email`),
-  CONSTRAINT `comentario_ibfk_1` FOREIGN KEY (`aluno_email`) REFERENCES `aluno` (`email`)
+  KEY `aluno_email` (`aluno_email`)
+  -- AJUSTANDO A FK PARA QUE SEJA POSSIVEL INSERIR UM COMENTARIO SENDO ADMIN
+  -- ,CONSTRAINT `comentario_ibfk_1` FOREIGN KEY (`aluno_email`) REFERENCES `aluno` (`email`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 

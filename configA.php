@@ -1,7 +1,20 @@
 <?php
+
+// ERROR CORREÇÃO
+// Essa configuração facilita o desenvolvimento, 
+// Faz com que o PHP retorne o erro na tela caso ele aconteça
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+
 // // ========== Config ============
 $_DB['server'] = 'localhost'; // Servidor MySQL
 $_DB['user'] = 'root'; // Usuário MySQL
+
+// ERROR CORREÇÃO
+// Caso você esteja usando o usuario padrão e ele não tenha senha, 
+// esse campo deve se uma string vazia
 $_DB['password'] = 'banana123'; // Senha MySQL
 $_DB['database'] = 'aletheia_db'; // Banco de dados MySQL
 // ==============================
