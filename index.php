@@ -1,27 +1,10 @@
 <?php
 include("configA.php");
-
-// ERROR CORREÇÃO
-// Adicionando pré carregamento para trazer a listagem dos comentarios no banco;
-session_start();
-
-// Verifica se o usuário está logado
-if (isset($_SESSION['email'])) {
-   
-  // consulta todos os comentarios da table em ordem decrescente
-  $sql = "SELECT * FROM comentario ORDER BY id DESC";
-  $query = $mysqli->query($sql) or die("Falha na execução do código SQL: " . $mysqli->error);
-
-  $comentarios = $query->fetch_all(MYSQLI_ASSOC);
-} else if (isset($_SESSION['admin_email'])) {
-  $sql = "SELECT * FROM comentario ORDER BY id DESC";
-  $query = $mysqli->query($sql) or die("Falha na execução do código SQL: " . $mysqli->error);
-
-  $comentarios = $query->fetch_all(MYSQLI_ASSOC);
-} else {
-  $comentarios = [];
-}
-
+session_start(); 
+// consulta todos os comentarios da table em ordem decrescente
+$sql = "SELECT * FROM comentario ORDER BY id DESC";
+$query = $mysqli->query($sql) or die("Falha na execução do código SQL: " . $mysqli->error);
+$comentarios = $query->fetch_all(MYSQLI_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -245,10 +228,9 @@ if (isset($_SESSION['email'])) {
                       } 
                   })
                 }
-
                 verificarUser3()
 
-             function openModal() {
+            function openModal() {
               document.getElementById("commentModal").style.display = "flex";
             } 
         
@@ -334,8 +316,6 @@ if (isset($_SESSION['email'])) {
               }
             }
           });
-
-
 
           </script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script> 

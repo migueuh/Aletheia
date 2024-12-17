@@ -28,9 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $email = ($_POST["email"]);
   $cpf = $_POST["cpf"];
   $senha = password_hash($_POST["senha"], PASSWORD_DEFAULT);
-    
-    // ERROR CORREÇÃO
-    // Adicionada verificação, caso não de erro ele redireciona para a pagina inicial;
+
   try {
     $consulta = $mysqli->prepare("INSERT INTO aluno (nome, email, cpf, senha) VALUES (?, ?, ?, ?)");
     $consulta->bind_param("ssss",$_POST['nome'], $_POST['email'], $_POST['cpf'], $senha );
@@ -245,7 +243,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           }
       }
 
-      document.querySelector('#email').addEventListener('blur', function() {
+      document.querySelector('#email').addEventListener('input', function() {
         var email = document.querySelector('#email').value;
         var emailError = document.querySelector('#emailError');
 
@@ -267,6 +265,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             };
 
             xhr.send('email=' + encodeURIComponent(email));  // Envia apenas o e-mail para verificação
+          } else {
+              emailError.textContent = '';  // Limpa a mensagem se o campo estiver vazio
           }
       });
 

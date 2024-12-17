@@ -24,11 +24,6 @@ if(isset($_POST['email']) || isset($_POST['senha'])) {
           // Inicia a sessão do admin
           session_start();
           
-          // ERROR CORREÇÃO
-          // Na tela do / (/) ele tentava acessar a chave : 'email' dentro do objeto $_SESSION
-          // Só que estava sendo criada a chave : 'admin_email' nesta tela quando admin, 
-          // isso fazia com que gera-se um erro quando admin
-          // corrigido para : 'email'
           $_SESSION['admin_email'] = $admin['email'];
           header("Location: index.php"); //criar uma página com as funcionalidades do admin, ou fazer verificação na tela principal (se == admin, visualizar e ter acesso a permissão/exclusão de comentario)
           exit;
