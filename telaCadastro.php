@@ -167,7 +167,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <label for="senha">Crie uma senha:</label>
         <input type="password" id="senha" name="senha" required><br>
        
-        <button type="submit">Cadastrar</button>
+        <button type="submit" id="cadastrar">Cadastrar</button>
     </form>
 
     <p class="aviso">Já tem uma conta? <a href="telaEntrar.php">Faça login aqui</a>.</p>
@@ -177,7 +177,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   <!-- SCRIPT (JS)-->
   <script>
-      const input = document.querySelector('#cpf')
+      const input = document.querySelector('#cpf');
       const aviso = document.querySelector('#alerta');
 
       input.addEventListener('keypress', () => {
@@ -243,33 +243,38 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           }
       }
 
-      document.querySelector('#email').addEventListener('input', function() {
-        var email = document.querySelector('#email').value;
-        var emailError = document.querySelector('#emailError');
+      function checkEmail() {
+      var email = document.querySelector('#email').value;
+      var emailError = document.querySelector('#emailError');
 
-        if (email !== '') {
-            var xhr = new XMLHttpRequest();
-            xhr.open('POST', 'telaCadastro.php', true);  // A mesma página do cadastro
-            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            
-            xhr.onload = function() {
-                if (xhr.status === 200) {
-                    var response = JSON.parse(xhr.responseText);
-                    
-                    if (response.exists) {
-                        emailError.textContent = 'Este e-mail já está cadastrado.';
-                    } else {
-                        emailError.textContent = '';  // Limpa a mensagem de erro
-                    }
-                }
-            };
+      if (email !== '') {
+          var xhr = new XMLHttpRequest();
+          xhr.open('POST', 'telaCadastro.php', true);  // A mesma página do cadastro
+          xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+          
+          xhr.onload = function() {
+              if (xhr.status === 200) {
+                  var response = JSON.parse(xhr.responseText);
+                  
+                  if (response.exists) {
+                      emailError.textContent = 'Este e-mail já está cadastrado.';
+                      document.querySelector('#cadastrar').disabled = true; // Desativa o botão
+                  } else {
+                      emailError.textContent = '';  // Limpa a mensagem de erro
+                      document.querySelector('#cadastrar').disabled = false; // Ativa o botão
+                  }
+              }
+          };
 
-            xhr.send('email=' + encodeURIComponent(email));  // Envia apenas o e-mail para verificação
-          } else {
-              emailError.textContent = '';  // Limpa a mensagem se o campo estiver vazio
-          }
-      });
+          xhr.send('email=' + encodeURIComponent(email));  // Envia apenas o e-mail para verificação
+      } else {
+          emailError.textContent = '';  // Limpa a mensagem se o campo estiver vazio
+          document.querySelector('#cadastrar').disabled = false; // Ativa o botão
+      }
+  }
 
+  // Adiciona o evento de input ao campo de e-mail
+  document.querySelector('#email').addEventListener('input', checkEmail);
 
 
   </script>
